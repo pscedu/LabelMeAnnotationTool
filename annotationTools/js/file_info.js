@@ -267,6 +267,8 @@ function file_info() {
     
     /** Gets image name */
     this.GetImName = function () {
+        console.log("Getting image name " + this.im_name);
+        app.image_name = this.im_name.replace(".jpg", "");
         return this.im_name;
     };
     

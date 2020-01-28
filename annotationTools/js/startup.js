@@ -273,6 +273,7 @@ function FinishStartup() {
   console.log('LabelMe: finished loading');
 
   console.timeEnd('startup');
+  console.log("Global image name Startup.js: " + app.image_name);
 }
 
 // Initialize the segmentation tool. This function is called when the field 
