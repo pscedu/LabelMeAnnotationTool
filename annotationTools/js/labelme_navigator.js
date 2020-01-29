@@ -3,7 +3,10 @@
  * @description Extends LabelMe for having a way to update the status of an image after labeling.
  * Expected file location: LabelMeAnnotationTool/annotationTools/js/labelme_navigator.js
  **/
-var serverUrl = 'http://127.0.0.1:8000/';
+// var serverUrl = 'http://julian-b450-i-aorus-pro-wifi.wifi.cmu.edu:8000/';
+var serverUrl = 'http://vm041.bridges.psc.edu:8000/';
+// var serverUrl = 'http://127.0.0.1:8000/';
+
 var app = new Vue({
     el: '#labelme_navigator_app',
     data: {
