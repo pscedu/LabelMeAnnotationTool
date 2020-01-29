@@ -15,13 +15,14 @@ var app = new Vue({
     },
     methods: {
         getStatuses: function () {
-            axios.get( serverUrl + "status/" + this.image_name)
+            axios.get( serverUrl + "get-status/" + this.image_name)
                 .then(function (response) {
                     if (response.data.human_labeled_stamps) {
                         this.human_labeled_stamps = true;
                         $(".human_labeled_stamps_status").text("Done!");
                     } else {
-                        console.log("human_labeled_stamps false");
+                        this.human_labeled_stamps = false;
+                        $(".human_labeled_stamps_status").text("Incomplete");
                     }
 
                     if (response.data.human_labeled_pages) {
@@ -29,7 +30,8 @@ var app = new Vue({
                         $(".human_labeled_pages_status").text("Done!");
                     }
                      else {
-                        console.log("human_labeled_pages_status false");
+                        this.human_labeled_pages = false;
+                        $(".human_labeled_pages_status").text("Incomplete");
                     }
                 })
                 .catch(function (error) {
@@ -41,10 +43,19 @@ var app = new Vue({
                 });
         },
         setStampsCompletedStatus: function () {
-            axios.post( serverUrl + "status", { stamp: true, page: false, image_name: this.image_name })
+            axios({
+                method: 'post',
+                url: serverUrl + "set-status",
+                data: {
+                    stamp: true,
+                    page: false,
+                    image_name: this.image_name
+                }
+            })
                 .then(function (response) {
                     if (response.status === 200) {
                         console.log("200 OK - Status sent to server.");
+                        app.getStatuses();
                     } else {
                         console.alert("Error sending status sent to server.");
                     }
@@ -58,10 +69,11 @@ var app = new Vue({
                 });
         },
         setPagesCompletedStatus: function () {
-            axios.post( serverUrl + "status", { stamp: false, page: true, image_name: this.image_name })
+            axios.post( serverUrl + "set-status", { stamp: false, page: true, image_name: this.image_name })
                 .then(function (response) {
                     if (response.status === 200) {
                         console.log("200 OK - Status sent to server.");
+                        app.getStatuses();
                     } else {
                         console.alert("Error sending status sent to server.");
                     }
