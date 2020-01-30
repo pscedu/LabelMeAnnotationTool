@@ -6,6 +6,12 @@ XBitHack on
 BrowserMatchNoCase macintosh Mac
 BrowserMatchNoCase MSIE InternetExplorer
 
+AuthType Basic
+AuthName "Restricted Access"
+AuthBasicProvider file
+AuthUserFile "/etc/httpd/conf/http.passwords"
+Require user user1
+
 <Files "tool.html">
 AddType application/xhtml+xml html
 AddHandler server-parsed .html
@@ -29,4 +35,4 @@ RewriteRule ^.*$ - "[T=text/html,L]"
 </Files>
 
 RewriteEngine on
-RewriteRule ^index\.html$ index.php 
+RewriteRule ^index\.html$ index.php
