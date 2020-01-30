@@ -13,28 +13,27 @@ var app = new Vue({
         image_name: "",
         human_labeled_stamps: false,
         human_labeled_pages: false,
-        human_labeled_stamps_status: "INCOMPLETE",
-        human_labeled_pages_status: "INCOMPLETE"
+        human_labeled_stamps_status: "-",
+        human_labeled_pages_status: "-"
     },
     methods: {
         getStatuses: function () {
-            axios.get( serverUrl + "get-status/" + this.image_name)
+            axios.get(serverUrl + "get-status/" + this.image_name)
                 .then(function (response) {
                     if (response.data.human_labeled_stamps) {
                         this.human_labeled_stamps = true;
-                        $(".human_labeled_stamps_status").text("Done!");
+                        this.human_labeled_stamps_status = "Complete";
                     } else {
                         this.human_labeled_stamps = false;
-                        $(".human_labeled_stamps_status").text("Incomplete");
+                        this.human_labeled_stamps_status = "Incomplete";
                     }
 
                     if (response.data.human_labeled_pages) {
                         this.human_labeled_pages = true;
-                        $(".human_labeled_pages_status").text("Done!");
-                    }
-                     else {
+                        this.human_labeled_pages_status = "Complete";
+                    } else {
                         this.human_labeled_pages = false;
-                        $(".human_labeled_pages_status").text("Incomplete");
+                        this.human_labeled_pages_status = "Incomplete";
                     }
                 })
                 .catch(function (error) {
@@ -72,7 +71,7 @@ var app = new Vue({
                 });
         },
         setPagesCompletedStatus: function () {
-            axios.post( serverUrl + "set-status", { stamp: false, page: true, image_name: this.image_name })
+            axios.post(serverUrl + "set-status", {stamp: false, page: true, image_name: this.image_name})
                 .then(function (response) {
                     if (response.status === 200) {
                         console.log("200 OK - Status sent to server.");
