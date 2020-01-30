@@ -173,8 +173,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             <div id="labelme_navigator_app" class="labelme_navigator_buttons">
                 Image name: <p>{{ image_name }}</p>
 
-                <button v-on:click="getStatuses">Refresh status</button>
-
                 Stamps status: <p class="human_labeled_stamps_status">{{ human_labeled_stamps_status }}</p>
                 <button v-on:click="setStampsCompletedStatus" id="stamps_complete" class="labelBtnDraw" type="button" title="Stamps complete">
                     <img src="Icons/zoomout.png" width="28" height="38"/> Stamps done
