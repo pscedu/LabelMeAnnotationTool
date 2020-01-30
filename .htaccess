@@ -7,8 +7,8 @@ BrowserMatchNoCase macintosh Mac
 BrowserMatchNoCase MSIE InternetExplorer
 
 <Files "tool.html">
-# AddType application/xhtml+xml html
-# AddHandler server-parsed .html
+AddType application/xhtml+xml html
+AddHandler server-parsed .html
 RewriteEngine On
 RewriteBase /
 RewriteCond %{HTTP_ACCEPT} !application/xhtml\+xml
