@@ -226,5 +226,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <script src="/annotationTools/js/scribble.js"></script>
         <script src="/annotationTools/js/xml_accessors.js"></script>
 
+
+        <script>
+            $(document).ready(function () {
+                // Handler when all assets (including images) are loaded
+                console.log("Loaded");
+                var myRe = new RegExp('image=(.+)$', 'g');
+                myArray = myRe.exec(window.location.href);
+                app.image_name = myArray[1].replace(".jpg", "");
+
+                app.getStatuses();
+            });
+        </script>
     </body>
 </html>
