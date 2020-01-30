@@ -171,20 +171,15 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <!-- DIV that will contain the object list -->
         <div id="anno_anchor">
             <div id="labelme_navigator_app" class="labelme_navigator_buttons">
-                Image name: <p>{{ image_name }}</p>
+                Image name: <b>{{ image_name }}</b>
 
-                Stamps status: <p class="human_labeled_stamps_status">{{ human_labeled_stamps_status }}</p>
-                <button v-on:click="setStampsCompletedStatus" id="stamps_complete" class="labelBtnDraw" type="button" title="Stamps complete">
-                    <img src="Icons/zoomout.png" width="28" height="38"/> Stamps done
-                </button>
+                Stamps status: <b class="human_labeled_stamps_status">{{ human_labeled_stamps_status }}</b>
+                <button v-on:click="setStampsCompletedStatus" id="button-setStampsCompletedStatus" title="Stamps complete">Complete stamps</button>
 
                 <br/>
 
-                Pages status: <p class="human_labeled_pages_status">{{ human_labeled_pages_status }}</p>
-
-                <button v-on:click="setPagesCompletedStatus" id="pages_complete" class="labelBtnDraw" type="button" title="Pages complete">
-                    <img src="Icons/zoomin.png" width="28" height="38"/> Pages done
-                </button>
+                Pages status: <b class="human_labeled_pages_status">{{ human_labeled_pages_status }}</b>
+                <button v-on:click="setPagesCompletedStatus" id="button-setPagesCompletedStatus" title="Pages complete">Complete pages</button>
             </div>
         </div>
 

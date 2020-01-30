@@ -24,20 +24,24 @@ var app = new Vue({
                         this.human_labeled_stamps = true;
                         this.human_labeled_stamps_status = "Complete";
                         $(".human_labeled_stamps_status").text("Done!");
+                        $('#button-setStampsCompletedStatus').attr('disabled','disabled');
                     } else {
                         this.human_labeled_stamps = false;
                         this.human_labeled_stamps_status = "Incomplete";
                         $(".human_labeled_stamps_status").text("Incomplete");
+                        $('#button-setStampsCompletedStatus').removeAttr('disabled');
                     }
 
                     if (response.data.human_labeled_pages) {
                         this.human_labeled_pages = true;
                         this.human_labeled_pages_status = "Complete";
                         $(".human_labeled_pages_status").text("Done!");
+                        $('#button-setPagesCompletedStatus').attr('disabled','disabled');
                     } else {
                         this.human_labeled_pages = false;
                         this.human_labeled_pages_status = "Incomplete";
                         $(".human_labeled_pages_status").text("Incomplete");
+                        $('#button-setPagesCompletedStatus').removeAttr('disabled');
                     }
                 })
                 .catch(function (error) {
