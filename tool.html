@@ -10,23 +10,31 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC
+        "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml11/DTD/xhtml11-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:v-on="http://www.w3.org/1999/xhtml"
+      xmlns:svg="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink">
+
     <head>
-        <meta charset="UTF-8">
         <title>LabelMe: The open annotation tool</title>
+        <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE,NO-STORE,MUST-REVALIDATE"/>
+        <META HTTP-EQUIV="imagetoolbar" CONTENT="no"/>
         <link rel="shortcut icon" href="Icons/favicon16.ico"/>
 
-        <link rel="stylesheet" type="text/css" href="annotationTools/css/styles.css?version=4">
-        <link rel="stylesheet" type="text/css" href="annotationTools/css/header.css?version=4">
-        <link rel="stylesheet" type="text/css" href="annotationTools/css/bubble.css?version=4">
-        <link rel="stylesheet" type="text/css" href="annotationTools/css/object_list.css?version=4">
-        <link rel="stylesheet" type="text/css" href="annotationTools/css/scribblemenu.css?version=4">
-        <link rel="stylesheet" type="text/css" href="annotationTools/css/jquery-ui.css">
+        <link rel="stylesheet" type="text/css" href="annotationTools/css/styles.css?version=4"/>
+        <link rel="stylesheet" type="text/css" href="annotationTools/css/header.css?version=4"/>
+        <link rel="stylesheet" type="text/css" href="annotationTools/css/bubble.css?version=4"/>
+        <link rel="stylesheet" type="text/css" href="annotationTools/css/object_list.css?version=4"/>
+        <link rel="stylesheet" type="text/css" href="annotationTools/css/scribblemenu.css?version=4"/>
+        <link rel="stylesheet" type="text/css" href="annotationTools/css/jquery-ui.css"/>
+
     </head>
 
     <!-- Start up LabelMe after HTML elements load -->
-    <body id="body" style="visibility:hidden;" onload="StartupLabelMe();">
+    <body id="body" style="visibility:hidden;" onload="javascript:StartupLabelMe();">
 
         <!-- Mechanical Turk instructions and submit button -->
         <div id="mt_submit_form"></div>
@@ -36,7 +44,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             <!-- LOGO-->
             <div id="logo">
                 <a href="index.html"><img src="Icons/LabelMe_logo3.png" width="216" height="69"
-                                          alt="LabelMe logo"></a>
+                                          alt="LabelMe logo"></img></a>
             </div>
 
             <!-- USERNAME FORM-->
@@ -124,7 +132,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
                 <div id="myCanvas_bg_div"
                      style="position:absolute;left:0px;top:0px;z-index:0;cursor:crosshair;width:100%;height:100%;background-color:rgba(128,64,0,0);">
-                    <svg
+                    <svg:svg
                             id="myCanvas_bg"
                             width="100%"
                             height="100%"
@@ -133,7 +141,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
                 <div id="select_canvas_div"
                      style="position:absolute;left:0px;top:0px;z-index:-2;cursor:default;width:100%;height:100%;background-color:rgba(128,64,0,0);">
-                    <svg
+                    <svg:svg
                             id="select_canvas"
                             width="100%"
                             height="100%"
@@ -142,7 +150,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
                 <div id="draw_canvas_div"
                      style="position:absolute;left:0px;top:0px;z-index:-2;cursor:crosshair;width:100%;height:100%;background-color:rgba(128,64,0,0);">
-                    <svg
+                    <svg:svg
                             id="draw_canvas"
                             width="100%"
                             height="100%"
@@ -151,7 +159,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
                 <div id="query_canvas_div"
                      style="position:absolute;left:0px;top:0px;z-index:-2;cursor:default;width:100%;height:100%;background-color:rgba(128,64,0,0);">
-                    <svg
+                    <svg:svg
                             id="query_canvas"
                             width="100%"
                             height="100%"
