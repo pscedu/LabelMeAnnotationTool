@@ -408,7 +408,12 @@ function file_info() {
                 im_req.open("GET", url, true);
             }
         }
-	console.log('prefetching')
+
+    console.log('prefetching');
+    app.image_name = this.im_name.replace(".jpg", "");
+    console.log("Prefetching label status for image for image " + app.image_name);
+    app.getStatuses();
+
 	im_req.onload = function(e){
 		if(im_req.status==200) {
 		    dir_name = im_req.responseXML.getElementsByTagName("dir")[0].firstChild.nodeValue;
