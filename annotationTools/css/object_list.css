@@ -11,7 +11,7 @@
 
 .labelme_navigator_buttons {
     position:absolute;
-    bottom:70px;
+    top:70px;
     right:5px;
     min-width:180px;
     height:auto;
@@ -43,7 +43,7 @@
 
 .object_list {
     position:absolute;
-    top:70px;
+    top:200px;
     right:5px;
     min-width:180px;
     height:auto;
