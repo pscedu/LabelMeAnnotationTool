@@ -18,9 +18,9 @@
     /*bottom:5px;
     max-height:50%;*/
 
-    max-height: -moz-calc(98% - 215px);
-    max-height: -webkit-calc(98% - 215px);
-    max-height: calc(98% - 215px);
+    max-height: -moz-calc(98% - 85px);
+    max-height: -webkit-calc(98% - 85px);
+    max-height: calc(98% - 85px);
 
 	padding:5px;
 	margin:0em 0 0em;
@@ -50,9 +50,9 @@
     /*bottom:5px;
     max-height:50%;*/
 
-    max-height: -moz-calc(98% - 85px);
-    max-height: -webkit-calc(98% - 85px);
-    max-height: calc(98% - 85px);
+    max-height: -moz-calc(98% - 215px);
+    max-height: -webkit-calc(98% - 215px);
+    max-height: calc(98% - 215px);
     
 	padding:5px;
 	margin:0em 0 0em;
