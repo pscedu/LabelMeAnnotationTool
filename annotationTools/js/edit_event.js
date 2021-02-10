@@ -11,9 +11,9 @@ var adjust_event = null;
 
 */
 function StartEditEvent(anno_id,event) {
-  
+
   console.log('LabelMe: Starting edit event...');
-  
+
   if (add_parts_to != null){
     $('#Link'+add_parts_to).css('font-weight',400)
     add_parts_to = null;
@@ -26,7 +26,7 @@ function StartEditEvent(anno_id,event) {
   }
   active_canvas = SELECTED_CANVAS;
   edit_popup_open = 1;
-  
+
   // Turn off automatic flag and write to XML file:
   if(LMgetObjectField(LM_xml, anno_id, 'automatic')) {
     // Insert data for server logfile:
@@ -34,24 +34,24 @@ function StartEditEvent(anno_id,event) {
     old_name = LMgetObjectField(LM_xml,main_canvas.annotations[anid].anno_id,'name');
     new_name = old_name;
     InsertServerLogData('cpts_not_modified');
-    
+
     // Set <automatic> in XML:
     LMsetObjectField(LM_xml, anno_id, 'automatic', '0');
-    
+
     // Write XML to server:
     WriteXML(SubmitXmlUrl,LM_xml,function(){return;});
   }
-  
+
   // Move select_canvas to front:
   $('#select_canvas').css('z-index','0');
   $('#select_canvas_div').css('z-index','0');
-  
+
   var anno = main_canvas.DetachAnnotation(anno_id);
-  
+
   editedControlPoints = 0;
-    
+
   if(username_flag) submit_username();
-  
+
   select_anno = anno;
   select_anno.SetDivAttach('select_canvas');
   var pt_x, pt_y;
@@ -64,7 +64,7 @@ function StartEditEvent(anno_id,event) {
     pt_y = select_anno.GetPtsY();
   }
   FillPolygon(select_anno.DrawPolygon(main_media.GetImRatio(),pt_x,pt_y));
-  
+
   // Get location where popup bubble will appear:
   var pt = main_media.SlideWindow(Math.round(pt_x[0]*main_media.GetImRatio()),Math.round(pt_y[0]*main_media.GetImRatio()));
 
@@ -79,20 +79,20 @@ function StartEditEvent(anno_id,event) {
   else {
     // Set object list choices for points and lines:
     var doReset = SetObjectChoicesPointLine(anno.GetPtsX().length);
-    
+
     // Popup edit bubble:
     WriteLogMsg('*Opened_Edit_Popup');
     mkEditPopup(pt[0],pt[1],anno);
-    
-    // If annotation is point or line, then 
+
+    // If annotation is point or line, then
     if(doReset) object_choices = '...';
   }
 }
 
 /** This function is called when the edit event is finished.  It can be
- * triggered when the user (1) clicks the close edit bubble button, 
- * (2) zooms, (3) submits an object label in the popup bubble, 
- * (4) presses the delete button in the popup bubble, (5) clicks the 
+ * triggered when the user (1) clicks the close edit bubble button,
+ * (2) zooms, (3) submits an object label in the popup bubble,
+ * (4) presses the delete button in the popup bubble, (5) clicks the
  * object in the object list, (6) presses the ESC key.
  */
 function StopEditEvent() {
@@ -103,7 +103,7 @@ function StopEditEvent() {
   // Move select_canvas to back:
   $('#select_canvas').css('z-index','-2');
   $('#select_canvas_div').css('z-index','-2');
-  
+
   // Remove polygon from the select canvas:
   if (!video_mode) select_anno.DeletePolygon();
   else $('#'+select_anno.polygon_id).remove();
@@ -118,10 +118,10 @@ function StopEditEvent() {
   // Turn on the image scrollbars:
   main_media.ScrollbarsOn();
 
-  // If the annotation is not deleted or we are in "view deleted" mode, 
+  // If the annotation is not deleted or we are in "view deleted" mode,
   // then attach the annotation to the main_canvas:
   if(!LMgetObjectField(LM_xml, anno.anno_id, 'deleted') || view_Deleted) {
-    
+
     main_canvas.AttachAnnotation(anno);
     if(!anno.hidden) {
       anno.RenderAnnotation('rest');
@@ -144,9 +144,9 @@ var adjust_occluded;
 
 /** This function is called when the user clicks 'Adjust Polygon' button */
 function AdjustPolygonButton() {
-  // We need to capture the data before closing the bubble 
+  // We need to capture the data before closing the bubble
   // (THIS IS AN UGLY HACK)
-  
+
   // Get annotation on the select canvas:
   var anno = select_anno;
 
@@ -154,8 +154,8 @@ function AdjustPolygonButton() {
   old_name = LMgetObjectField(LM_xml,anno.anno_id,'name');
   if(document.getElementById('objEnter')) new_name = RemoveSpecialChars(document.getElementById('objEnter').value);
   else new_name = RemoveSpecialChars(adjust_objEnter);
-  
-  var re = /[a-zA-Z0-9]/;
+
+  var re = /[a-zA-Z0-9\?\+]/;
   if(!re.test(new_name)) {
     alert('Please enter an object name');
     return;
@@ -170,8 +170,8 @@ function AdjustPolygonButton() {
 
   // Turn on image scrollbars:
   main_media.ScrollbarsOn();
-  
-  
+
+
 
   // Remove polygon from canvas:
   $('#'+anno.polygon_id).parent().remove();
@@ -189,7 +189,7 @@ function AdjustPolygonButton() {
 
       // Redraw polygon:
       anno.RenderAnnotation('rest');
-      
+
       // Set polygon (x,y) points:
       if (!video_mode){
         LMsetObjectField(LM_xml, anno.anno_id, 'x', x);
@@ -197,15 +197,15 @@ function AdjustPolygonButton() {
       }
       else {
         var slidervalues = $('#oTempBar').slider("option", "values");
-        if (oVP.getcurrentFrame() >= slidervalues[0] && oVP.getcurrentFrame() <= slidervalues[1]){   
+        if (oVP.getcurrentFrame() >= slidervalues[0] && oVP.getcurrentFrame() <= slidervalues[1]){
           main_media.UpdateObjectPosition(anno, x, y);
         }
       }
-      
+
 
       // Set global variable whether the control points have been edited:
       editedControlPoints = _editedControlPoints;
-      
+
       // Submit annotation:
 
       if (video_mode) main_media.SubmitEditObject();

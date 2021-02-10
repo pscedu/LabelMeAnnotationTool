@@ -1,4 +1,4 @@
-/** @file File containing the video class 
+/** @file File containing the video class
 * Video is a mirror class of image.js. Most of the functions are
 * similar and could be joined
 */
@@ -9,7 +9,7 @@
  * @param {string} id - The id of the dom element containing the video
 */
 function video(id) {
-    
+
     // *******************************************
     // Private variables:
     // *******************************************
@@ -28,14 +28,14 @@ function video(id) {
     this.browser_im_ratio; // Initial im_ratio; this should not get changed!!
     this.curr_frame_width;  // Current width of main_media.
     this.curr_frame_height; // Current height of main_media.
-    
-    
 
-    
+
+
+
     // *******************************************
     // Public methods:
     // *******************************************
-    
+
     /** Fetches a new video based on the URL string. Creates a div container to store the video */
 
     this.GetNewVideo = function(onload_helper) {
@@ -57,21 +57,21 @@ function video(id) {
             oVP.loadChunk(1, 1, true, false);
 
         });
-        
+
     };
-    
+
     /** Returns the ratio of the available width/height to the original
      * width/height. For now, it is always 1 */
     this.GetImRatio = function() {
         return this.im_ratio;
     };
-    
+
     /** Returns self object in order to be compliant with the functions from file_info*/
     this.GetFileInfo = function() {
         return this;
     };
-    
-    
+
+
     /** Sets the dimensions of the image based on browser setup. For now it sets 640x480 */
     this.SetImageDimensions = function() {
         this.im_ratio = 1.;
@@ -79,14 +79,14 @@ function video(id) {
         this.height_curr = 480;
         this.width_orig = 640;
         this.height_orig = 480;
-        
-        
-        
+
+
+
         $("#myCanvas_bg").width(this.width_curr).height(this.height_curr);
         $("#select_canvas").width(this.width_curr).height(this.height_curr);
         $("#draw_canvas").width(this.width_curr).height(this.height_curr);
         $("#query_canvas").width(this.width_curr).height(this.height_curr);
-        
+
         $("#main_media").width(this.width_curr).height(this.height_curr);
         this.curr_frame_width = this.width_curr;
         this.curr_frame_height = this.height_curr;
@@ -100,8 +100,8 @@ function video(id) {
         }
         else this.im.style.display = '';
     };
-    
-    
+
+
     /** If (x,y) is not in view, then scroll it into view.  Return adjusted
      * (x,y) point that takes into account the slide offset.
      * @param {int} x
@@ -118,14 +118,14 @@ function video(id) {
         pt[1] = y-$("#main_media").scrollTop();
         return pt;
     };
-    
-    /** Turn off image scrollbars if zoomed in. */    
+
+    /** Turn off image scrollbars if zoomed in. */
     this.ScrollbarsOff = function () {
         if(!this.IsFitImage()) {
             document.getElementById('main_media').style.overflow = 'hidden';
         }
     };
-    
+
     /** Turn on image scrollbars if zoomed in. */
 
     this.ScrollbarsOn = function () {
@@ -133,31 +133,31 @@ function video(id) {
             document.getElementById('main_media').style.overflow = 'auto';
         }
     };
-    
+
     /** Not working now */
     this.Zoom = function(amt) {
         // if a new polygon is being added while the user press the zoom button then do nothing.
         if(wait_for_input) return;
-        
+
         // if an old polygon is being edited while the user press the zoom button then close the polygon and zoom.
         if(edit_popup_open) StopEditEvent();
-        
+
         if(amt=='fitted') {
                 this.im_ratio = this.browser_im_ratio;
         } else {
                 this.im_ratio = this.im_ratio * amt;
         }
-        
+
         // if the scale factor is bellow the original scale, then do nothing (do not make the image too small)
         if(this.im_ratio < this.browser_im_ratio) {this.im_ratio=this.browser_im_ratio; return;}
-        
+
         // New width and height of the rescaled picture
         this.width_curr = Math.round(this.im_ratio*this.width_orig);
         this.height_curr = Math.round(this.im_ratio*this.height_orig);
-        
+
         // Scale and scroll the image so that the center stays in the center of the visible area
         this.ScaleFrame(amt);
-        
+
     // Remove polygon from draw canvas:
     var anno = null;
     if(draw_anno) {
@@ -174,7 +174,7 @@ function video(id) {
         $("#select_canvas").width(this.width_curr).height(this.height_curr);
         $("#draw_canvas").width(this.width_curr).height(this.height_curr);
         $("#query_canvas").width(this.width_curr).height(this.height_curr);
-        
+
         // Redraw polygons.
     main_canvas.RenderAnnotations();
 
@@ -187,7 +187,7 @@ function video(id) {
 
     /*************************************************************/
     /*************************************************************/
-    // Scribble: 
+    // Scribble:
     if (drawing_mode == 1){
       scribble_canvas.redraw();
       scribble_canvas.drawMask();
@@ -195,38 +195,38 @@ function video(id) {
     /*************************************************************/
     /*************************************************************/
     };
-    
-    
-    
+
+
+
     // *******************************************
     // Private methods:
     // *******************************************
-    
+
     /** Tells the picture to take up the available space in the browser, if it needs it. 6.29.06*/
-    
+
     this.ScaleFrame = function(amt) {
         // Look at the available browser (height,width) and the image (height,width),
         // and use the smaller of the two for the main_media (height,width).
         // also center the image so that after rescaling, the center pixels visible stays at the same location
         //var avail_height = this.GetAvailHeight();
         this.curr_frame_height = Math.min(this.GetAvailHeight(), this.height_curr);
-        
+
         //var avail_width = this.GetAvailWidth();
         this.curr_frame_width = Math.min(this.GetAvailWidth(), this.width_curr);
-        
+
         // also center the image so that after rescaling, the center pixels visible stays at the same location
         cx = $("#main_media").scrollLeft()+this.curr_frame_width/2.0; // current center
         cy = $("#main_media").scrollTop()+this.curr_frame_height/2.0;
         Dx = Math.max(0, $("#main_media").scrollLeft()+(amt-1.0)*cx); // displacement needed
         Dy = Math.max(0, $("#main_media").scrollTop()+(amt-1.0)*cy);
-        
+
         // set the width and height and scrolls
         $("#main_media").scrollLeft(Dx).scrollTop(Dy);
         $("#main_media").width(this.curr_frame_width).height(this.curr_frame_height);
-        
+
     };
-    
-    
+
+
     /** Retrieves and sets the original image's dimensions (width/height).
      * @param {image} im
     */
@@ -235,13 +235,13 @@ function video(id) {
         this.height_orig = im.height;
         return;
     };
-    
+
     /** gets available width (6.14.06) */
     this.GetAvailWidth = function() {
         return $(window).width() - $("#main_media").offset().left -10 - 200;
         // we could include information about the size of the object box using $("#anno_list").offset().left
     };
-    
+
     /** gets available height (6.14.06) */
     this.GetAvailHeight = function() {
         var m = main_media.GetFileInfo().GetMode();
@@ -250,23 +250,23 @@ function video(id) {
         }
         return $(window).height() - $("#main_media").offset().top -10;
     };
-    
-    
-    
+
+
+
     /** Returns true if the image is zoomed to the original (fitted) resolution. */
     this.IsFitImage = function () {
         return (this.im_ratio < 0.01+this.browser_im_ratio);
     };
-    
+
     /** Returns true if (x,y) is viewable. */
-    this.IsPointVisible = function (x,y) {        
+    this.IsPointVisible = function (x,y) {
         var scrollLeft = $("#main_media").scrollLeft();
         var scrollTop = $("#main_media").scrollTop();
-        
+
         if(((x*this.im_ratio < scrollLeft) ||
-            (x*this.im_ratio - scrollLeft > this.curr_frame_width - 160)) || 
-           ((y*this.im_ratio < scrollTop) || 
-            (y*this.im_ratio - scrollTop > this.curr_frame_height))) 
+            (x*this.im_ratio - scrollLeft > this.curr_frame_width - 160)) ||
+           ((y*this.im_ratio < scrollTop) ||
+            (y*this.im_ratio - scrollTop > this.curr_frame_height)))
             return false;  //the 160 is about the width of the right-side div
         return true;
     };
@@ -294,16 +294,16 @@ function video(id) {
                 if(par_field=='username') {
                     username = par_value;
                 }
-                
+
                 if(par_field=='folder') {
                     this.dir_name = par_value;
                     console.log(par_value);
                 }
                 if(par_field=='videoname') {
                     this.video_name = par_value;
-                    
+
                 }
-                
+
                 if((par_field=='scribble')&&(par_value=='true')) {
                     scribble_mode = true;
                 }
@@ -313,24 +313,24 @@ function video(id) {
                 par_str = par_str.substring(idx+1,par_str.length);
             } while(idx != -1);
 
-            
-            
+
+
             if((this.mode=='i') || (this.mode=='c') || (this.mode=='f')) {
                 document.getElementById('body').style.visibility = 'visible';
             }
-            
+
             else {
                 this.mode = 'i';
                 document.getElementById('body').style.visibility = 'visible';
             }
-            
+
             if(!view_ObjList) {
                 var p = document.getElementById('anno_anchor');
                 p.parentNode.removeChild(p);
             }
-            
+
         }
-        
+
         return 1;
     };
 
@@ -338,7 +338,7 @@ function video(id) {
     this.GetMode = function() {
         return 'v';
     };
-    
+
     /** Gets collection name */
     this.GetCollection = function () {
         return "LabelMe";
@@ -362,7 +362,7 @@ function video(id) {
     /** Gets video path */
     this.GetVideoPath = function (){
       if((this.mode=='i') || (this.mode=='c') || (this.mode=='f') || (this.mode=='im') || (this.mode=='mt')) return '/LabelMeVideo/VLMVideos/' + this.dir_name + '/' + this.video_name+'.flv';
-    };  
+    };
 
     /** Gets full image name */
     this.GetFullName = function () {
@@ -381,7 +381,7 @@ function video(id) {
         var idx = str.indexOf('=');
         return str.substring(0,idx);
     };
-    
+
     /** String is assumed to have field=value form.  Parses string to
     return the value. */
     this.GetURLValue = function (str) {
@@ -399,18 +399,18 @@ function video(id) {
         if(idx != -1) {
             url = url.substring(0,idx);
         }
-        
+
         // Include username in URL:
         extra_field = '&video=true';
         if (bbox_mode) extra_field += '&bbox=true';
         if(username != 'anonymous') extra_field += '&username=' + username;
-        
+
         if(this.mode=='i') window.location = url + '?collection=' + this.collection + '&mode=' + this.mode + '&folder=' + this.dir_name + '&videoname=' + this.video_name + extra_field;
         else if(this.mode=='im') window.location = url + '?collection=' + this.collection + '&mode=' + this.mode + '&folder=' + this.dir_name + '&videoname=' + this.video_name + extra_field;
         else if(this.mode=='mt') window.location = url + '?collection=' + this.collection + '&mode=' + this.mode + '&folder=' + this.dir_name + '&videoname=' + this.video_name + extra_field;
         else if(this.mode=='c') window.location = url + '?mode=' + this.mode + '&username=' + username + '&collection=' + this.collection + '&folder=' + this.dir_name + '&videoname=' + this.video_name + extra_field;
         else if(this.mode=='f') window.location = url + '?mode=' + this.mode + '&folder=' + this.dir_name + '&videoname=' + this.video_name + extra_field;
-        
+
         return false;
     };
 
@@ -473,8 +473,8 @@ function video(id) {
       var pts_x = (curr_obj.children("polygon").children("x").text()).split(';');
       var pts_y = (curr_obj.children("polygon").children("y").text()).split(';');
 
-      for(var ti=0; ti<framestamps.length; ti++) { 
-        framestamps[ti] = parseInt(framestamps[ti], 10); 
+      for(var ti=0; ti<framestamps.length; ti++) {
+        framestamps[ti] = parseInt(framestamps[ti], 10);
       }
       for (var ti = 0; ti < userlabeledframes.length; ti++){
         userlabeledframes[ti] = parseInt(userlabeledframes[ti],10);
@@ -503,7 +503,7 @@ function video(id) {
             var Yref = pts_y[frameprior].split(',');
             coords = this.GetInterpolatedPoints(Xref, Yref, newx, newy, framestamps[frameprior], framestamps[objectind], framestamps[i]);
         }
-        
+
         pts_x[i] = coords[0].join();
         pts_y[i] = coords[1].join();
       }
@@ -529,57 +529,57 @@ function video(id) {
       LMsetObjectField(LM_xml, obj_ndx, "x", new_x_str);
       LMsetObjectField(LM_xml, obj_ndx, "y", new_y_str);
       LMsetObjectField(LM_xml, obj_ndx, "userlabeled", userlabeledframes.join());
-        
+
     }
 
     /** Submits an edited object, stored in select_anno */
     this.SubmitEditObject = function (){
         submission_edited = 1;
         var anno = select_anno;
-      
+
       // object name
       old_name = LMgetObjectField(LM_xml,anno.anno_id,'name');
       if(document.getElementById('objEnter')) new_name = RemoveSpecialChars(document.getElementById('objEnter').value);
       else new_name = RemoveSpecialChars(adjust_objEnter);
-      
-      var re = /[a-zA-Z0-9]/;
+
+      var re = /[a-zA-Z0-9\?\+]/;
       if(!re.test(new_name)) {
         alert('Please enter an object name');
         return;
       }
-      
+
       if (use_attributes) {
         // occlusion field
         if (document.getElementById('occluded')) new_occluded = RemoveSpecialChars(document.getElementById('occluded').value);
         else new_occluded = RemoveSpecialChars(adjust_occluded);
-        
+
         // attributes field
         if(document.getElementById('attributes')) new_attributes = RemoveSpecialChars(document.getElementById('attributes').value);
         else new_attributes = RemoveSpecialChars(adjust_attributes);
       }
-      
-      
-      
+
+
+
       // Insert data to write to logfile:
       if(editedControlPoints) InsertServerLogData('cpts_modified');
       else InsertServerLogData('cpts_not_modified');
 
       // Object index:
       var obj_ndx = anno.anno_id;
-      
+
       // Set fields:
       LMsetObjectField(LM_xml, obj_ndx, "name", new_name);
       LMsetObjectField(LM_xml, obj_ndx, "automatic", "0");
-      
+
       // Insert attributes (and create field if it is not there):
 
       LMsetObjectField(LM_xml, obj_ndx, "attributes", new_attributes);
       LMsetObjectField(LM_xml, obj_ndx, "occluded", new_occluded);
       WriteXML(SubmitXmlUrl,LM_xml,function(){return;});
-    
+
       StopEditEvent();
-      oVP.DisplayFrame(oVP.getcurrentFrame());    
-      
+      oVP.DisplayFrame(oVP.getcurrentFrame());
+
     }
 
     /** Submits an object for the first time. It is the equivalent of SubmitQuery for video */
@@ -590,7 +590,7 @@ function video(id) {
             // get attributes (is the field exists)
             if(document.getElementById('attributes')) new_attributes = RemoveSpecialChars(document.getElementById('attributes').value);
             else new_attributes = "";
-            
+
             // get occlusion field (is the field exists)
             if (document.getElementById('occluded')) new_occluded = RemoveSpecialChars(document.getElementById('occluded').value);
             else new_occluded = "";
@@ -606,7 +606,7 @@ function video(id) {
               anno = draw_anno;
               draw_anno = null;
             }
-            var re = /[a-zA-Z0-9]/;
+            var re = /[a-zA-Z0-9\?\+]/;
             if(!re.test(nn)) {
                 alert('Please enter an object name');
                 return;
@@ -614,16 +614,16 @@ function video(id) {
         }
         else {
             nn = RemoveSpecialChars(document.getElementById('objEnter').value);
-            var re = /[a-zA-Z0-9]/;
+            var re = /[a-zA-Z0-9\?\+]/;
             if(!re.test(nn)) {
                 alert('Please enter an object name');
                 return;
             }
             anno = main_handler.QueryToRest();
         }
-        
-        
-    
+
+
+
         // Update old and new object names for logfile:
         submission_edited = 0;
         global_count++;
@@ -644,14 +644,14 @@ function video(id) {
         html_str += '<id>' + anno.anno_id + '</id>';
         if (bounding_box){
            html_str += '<type> bounding_box </type>';
-        } 
+        }
         html_str += '<polygon>';
         html_str += '<username>' + username + '</username>';
         var t_str = '<t>';
         var x_str = '<x>';
         var y_str = '<y>';
         for (var fr = oVP.getcurrentFrame(); fr < oVP.getnumFrames(); fr++){
-            if (fr > oVP.getcurrentFrame()){ 
+            if (fr > oVP.getcurrentFrame()){
                 t_str += ', ';
                 x_str += '; ';
                 y_str += '; ';
@@ -701,7 +701,7 @@ function video(id) {
           anno = select_anno;
           anno.DrawPolygon(main_media.GetImRatio(),x, y);
 
-          
+
 
           // Set global variable whether the control points have been edited:
           editedControlPoints = _editedControlPoints;
@@ -719,5 +719,5 @@ function video(id) {
     };
 
 
-    
+
 }
